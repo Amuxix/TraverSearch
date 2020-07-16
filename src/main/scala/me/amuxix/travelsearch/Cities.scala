@@ -19,27 +19,5 @@ enum City(val name: String) {
   case Farmine extends City("Farmine")
   case FemorHills extends City("Femor Hills")
   case Kazordoon extends City("Kazordoon")
-}
-
-object City {
-  val entries = List(
-    AbDendriel,
-    Ankrahmun,
-    Carlin,
-    Darashia,
-    Edron,
-    LibertyBay,
-    PortHope,
-    Roshamuul,
-    Oramond,
-    Svargrond,
-    Thais,
-    Venore,
-    Yalahar,
-    Krailos,
-    Issavi,
-    Farmine,
-    FemorHills,
-    Kazordoon,
-  )
+  case Cormaya extends City("Cormaya")
 }
