@@ -45,15 +45,15 @@ object TravelSearch {
       Thais      -> List(inf, inf,  60,  0 ),
     )
 
-    val prices = List(boatPrices, magicCarpetPrices, steamshipPrices)
+    val prices = List((Boat, boatPrices), (MagicCarpet, magicCarpetPrices), (Steamship, steamshipPrices))
 
 
-    def cheapestPath(start: City, end: City) = {
+    def cheapestPath(start: City, end: City): Option[(Int, List[Leg])] = {
       val possibilities: Map[City, List[Leg]] = City.values.map { city =>
-        val legs: List[Leg] = prices.flatMap { priceMap =>
+        val legs: List[Leg] = prices.flatMap { (tranport, priceMap) =>
           val cities = priceMap.keys.toList
           priceMap.get(city).map(_.zipWithIndex.collect {
-            case (price, index) if price > 0 && price < inf => Leg(city, cities(index), price, Boat)
+            case (price, index) if price > 0 && price < inf => Leg(city, cities(index), price, tranport)
           }).toList.flatten
         }
         city -> legs
@@ -76,6 +76,10 @@ object TravelSearch {
       go(start, end)
     }
 
-    println(cheapestPath(Kazordoon, Ankrahmun))
+    val messages = cheapestPath(Kazordoon, Ankrahmun).toList.flatMap {
+      case (totalPrice, legs) => s"Total price: $totalPrice" +: legs.map(_.write)
+    }
+    
+    println(messages.mkString("\n"))
   }
 }
